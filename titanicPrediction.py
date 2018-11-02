@@ -114,6 +114,22 @@ train_df = train_df.drop(['Cabin'], axis = 1)
 test_df = test_df.drop(['Cabin'], axis = 1)
 
 # Fix Age issue
+data = [train_df, test_df]
+
+for dataset in data:
+    mean = train_df["Age"].mean()
+    std = test_df["Age"].std()
+    is_null = dataset["Age"].isnull().sum()
+    
+    rand_age = np.random.randint(mean-std, mean+std, size = is_null)
+    
+    age_slice = dataset["Age"].copy()
+    age_slice[np.isnan(age_slice)] = rand_age
+    dataset["Age"] = age_slice
+    dataset["Age"] = train_df["Age"].astype(int)
+
+# test
+train_df["Age"].isnull().sum()
 
 
 
