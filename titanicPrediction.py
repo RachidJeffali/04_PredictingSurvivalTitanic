@@ -161,7 +161,37 @@ for dataset in data:
 train_df = train_df.drop(['Name'], axis=1)
 test_df = test_df.drop(['Name'], axis=1)
 
+# drop Ticket column
+train_df = train_df.drop(['Ticket'], axis=1)
+test_df = test_df.drop(['Ticket'], axis=1)
 
+# Convert 'Male' into numeric
+genders = {"male": 0, "female": 1}
+data = [train_df, test_df]
 
+for dataset in data:
+    dataset['Sex'] = dataset['Sex'].map(genders)
 
+# convert Embarked feature into numeric
+ports = {"S": 0, "C": 1, "Q": 2}
+data = [train_df, test_df]
+
+for dataset in data:
+    dataset['Embarked'] = dataset['Embarked'].map(ports)
+
+# Creating Categories
+    #♥ Categories fo Age
+data = [train_df, test_df]
+for dataset in data:
+    dataset['Age'] = dataset['Age'].astype(int)
+    dataset.loc[dataset['Age'] <= 11, 'Age'] = 0
+    dataset.loc[(dataset['Age'] > 11) & (dataset['Age'] <= 18), 'Age'] = 1
+    dataset.loc[(dataset['Age'] > 18) & (dataset['Age'] <= 22), 'Age'] = 2
+    dataset.loc[(dataset['Age'] > 22) & (dataset['Age'] <= 27), 'Age'] = 3
+    dataset.loc[(dataset['Age'] > 27) & (dataset['Age'] <= 33), 'Age'] = 4
+    dataset.loc[(dataset['Age'] > 33) & (dataset['Age'] <= 40), 'Age'] = 5
+    dataset.loc[(dataset['Age'] > 40) & (dataset['Age'] <= 66), 'Age'] = 6
+    dataset.loc[dataset['Age'] > 66, 'Age'] = 6
+
+    # Categories for Fare
 
