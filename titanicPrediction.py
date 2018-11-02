@@ -131,55 +131,35 @@ for dataset in data:
 # test
 train_df["Age"].isnull().sum()
 
+# Embarked Issue, fill with the common value
+common_value = 'S'
+data = [train_df, test_df]
+for dataset in data:
+    dataset['Embarked'] = dataset['Embarked'].fillna(common_value)
 
+# Converting "Fare" from float to int64
+data = [train_df, test_df]
+for dataset in data:
+    dataset['Fare'] = dataset['Fare'].fillna(0)
+    dataset['Fare'] = dataset['Fare'].astype(int)
+    
+# Extract Titles from Name and convert to number
+data = [train_df, test_df]
+titles = {"Mr": 1, "Miss": 2, "Mrs": 3, "Master": 4, "Rare": 5}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+for dataset in data:
+    dataset['Title'] = dataset.Name.str.extract('([A-Za-z]+)\.', expand=False)
+    dataset['Title'] = dataset['Title'].replace(['Lady','Countess','Capt','COl','Don','Dr',
+           'Major','Rev','Sir','Jonkheer','Dona'], 'Rare')
+    dataset['Title'] = dataset['Title'].replace('Mlle', 'Miss')
+    dataset['Title'] = dataset['Title'].replace('Ms','Miss')
+    dataset['Title'] = dataset['Title'].replace('Mme','Mrs')
+    dataset['Title'] = dataset['Title'].map(titles)
+    dataset['Title'] = dataset['Title'].fillna(0)
+    
+# drop Name column
+train_df = train_df.drop(['Name'], axis=1)
+test_df = test_df.drop(['Name'], axis=1)
 
 
 
