@@ -85,11 +85,16 @@ grid.add_legend()
 # parch : of parents / children aboard the Titanic
 
 data = [train_df, test_df]
-from dataset in data:
+for dataset in data:
     dataset['relatives'] = dataset['SibSp'] + dataset['Parch']
     dataset.loc[dataset['relatives'] > 0, 'not_alone'] = 0
-    dataset.loc[dataset['relatives']]
+    dataset.loc[dataset['relatives'] == 0, 'not_alone'] = 1
+    dataset['not_alone'] = dataset['not_alone'].astype(int)
     
+train_df['not_alone'].value_counts()
+
+axes = sns.factorplot('relatives', 'Survived', data = train_df, aspect = 2.5)
+
 
 
 
