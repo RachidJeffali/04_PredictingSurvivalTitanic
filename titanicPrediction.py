@@ -329,9 +329,12 @@ print("Scores: ", scores)
 print("Mean: ", scores.mean())
 print("Standard deviation :", scores.std())
 
+# Feature importance
+importances = pd.DataFrame({'feature':x_train.columns, 
+                            'importance':np.round(random_forest.feature_importances_, 3)})
+importances.sort_values('importance', ascending = False).set_index('feature')
 
-
-
+importances.plot.bar(x='feature', y='importance')
 
 
 
