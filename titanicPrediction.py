@@ -334,9 +334,25 @@ importances = pd.DataFrame({'feature':x_train.columns,
                             'importance':np.round(random_forest.feature_importances_, 3)})
 importances.sort_values('importance', ascending = False).set_index('feature')
 
-importances.plot.bar(x='feature', y='importance')
+importances.plot.bar()
 
+'''
+not_alone and Parch doesn’t play a significant role in our 
+random forest classifiers prediction process.
+'''
 
+x_train = x_train.drop('not_alone', axis = 1)
+x_test = x_test.drop('not_alone', axis = 1)
+
+x_train = x_train.drop('Parch', axis = 1)
+x_test = x_test.drop('Parch', axis = 1)
+
+# Random Forest
+random_forest = RandomForestClassifier(n_estimators = 100, oob_score = True)
+random_forest.fit(x_train, y_train)
+Y_prediction = random_forest.predict(x_test)
+
+acc_random_forest_2 = round(random_forest.score(x_train, y_train)*100, 2)
 
 
 
