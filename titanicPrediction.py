@@ -205,6 +205,20 @@ for dataset in data:
     dataset.loc[dataset['Fare'] > 250, 'Fare'] = 5
     dataset[ 'Fare'] = dataset['Fare'].astype(int)
     
+# Creating New features
+# Age times class
+
+data = [train_df, test_df]
+for dataset in data:
+    dataset['Age_Class'] = dataset['Age'] * dataset['Pclass']
+
+# Fare per Person
+data = [train_df, test_df]
+for dataset in data:
+    dataset['Fare_Per_Person'] = dataset['Fare']/(dataset['relatives']+1)
+    dataset['Fare_Per_Person'] = dataset['Fare_Per_Person'].astype(int)
+
+# Building Machine Learning
 
 
 
