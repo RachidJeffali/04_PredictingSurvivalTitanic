@@ -194,4 +194,18 @@ for dataset in data:
     dataset.loc[dataset['Age'] > 66, 'Age'] = 6
 
     # Categories for Fare
+data = [train_df, test_df]
+
+for dataset in data:
+    dataset.loc[dataset['Fare'] <= 7.91, 'Fare'] = 0
+    dataset.loc[(dataset['Fare'] > 7.91) & (dataset['Fare'] <=14.454), 'Fare'] = 1
+    dataset.loc[(dataset['Fare'] > 14.454) & (dataset['Fare'] <=31), 'Fare'] = 2
+    dataset.loc[(dataset['Fare'] > 31) & (dataset['Fare'] <=994), 'Fare'] = 3
+    dataset.loc[(dataset['Fare'] > 99) & (dataset['Fare'] <=250), 'Fare'] = 4
+    dataset.loc[dataset['Fare'] > 250, 'Fare'] = 5
+    dataset[ 'Fare'] = dataset['Fare'].astype(int)
+    
+
+
+
 
