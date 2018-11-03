@@ -219,6 +219,80 @@ for dataset in data:
     dataset['Fare_Per_Person'] = dataset['Fare_Per_Person'].astype(int)
 
 # Building Machine Learning
+# define train set and test set
+x_train = train_df.drop("Survived", axis=1)
+y_train = train_df["Survived"]
+x_test = test_df.drop("PassengerId", axis=1).copy()
+
+# Stochastic Gradient Descent
+sgd = linear_model.SGDClassifier(max_iter = 5, tol = None)
+sgd.fit(x_train, y_train)
+y_pred = sgd.predict(x_test)
+
+sgd.score(x_train, y_train)
+
+acc_sgd = round(sgd.score(x_train, y_train)*100, 2)
+# => acc = 72,5%
+
+# Random forest
+random_forest = RandomForestClassifier(n_estimators = 100)
+random_forest.fit(x_train, y_train)
+
+y_prediction = random_forest.predict(x_test)
+
+random_forest.score(x_train, y_train)
+acc_random_forest = round(random_forest.score(x_train, y_train)*100, 2)
+# => acc = 92.59%
+
+# Logisitc Regression
+logreg = LogisticRegression()
+logreg.fit(x_train, y_train)
+
+y_pred = logreg.predict(x_test)
+
+acc_logreg = round(logreg.score(x_train, y_train)*100, 2)
+# => acc = 81,82 %
+
+# K Nearest Neighbor
+knn = KNeighborsClassifier(n_neighbors = 3)
+knn.fit(x_train, y_train)
+y_pred = knn.predict(x_test)
+
+acc_knn = round(knn.score(x_train, y_train)*100, 2)
+# => acc = 86,31%
+
+#♠ Gaussian Naive Bayes
+gaussian = GaussianNB()
+gaussian.fit(x_train, y_train)
+y_pred = gaussian.predict(x_test)
+
+acc_gaussian = round(gaussian.score(x_train, y_train) * 100, 2)
+# => acc = 78,23%
+
+# Perceptron
+perceptron = Perceptron(max_iter = 5)
+perceptron.fit(x_train, y_train)
+
+y_pred = perceptron.predict(x_test)
+
+acc_perceptron = round(perceptron.score(x_train, y_train)*100,2)
+# => acc = 81,14%
+
+# Linear SVM
+linear_svc = LinearSVC()
+linear_svc.fit(x_train, y_train)
+
+y_pred = linear_svc.predict(x_test)
+
+acc_linear_svc = round(linear_svc.score(x_train, y_train)*100, 2)
+# => acc = 81,48 %
+
+
+
+
+
+
+
 
 
 
