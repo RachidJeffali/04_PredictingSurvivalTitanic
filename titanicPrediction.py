@@ -287,7 +287,47 @@ y_pred = linear_svc.predict(x_test)
 acc_linear_svc = round(linear_svc.score(x_train, y_train)*100, 2)
 # => acc = 81,48 %
 
+# Decision Tree
+decision_tree = DecisionTreeClassifier()
+decision_tree.fit(x_train, y_train)
 
+y_pred = decision_tree.predict(x_test)
+
+acc_decision_tree = round(decision_tree.score(x_train, y_train)*100, 2)
+# => acc = 92,59%
+
+# Which is the best model
+results = pd.DataFrame({
+    'Model': ['Support Vector Machines', 'KNN', 'Logistic Regression', 
+              'Random Forest', 'Naive Bayes', 'Perceptron', 
+              'Stochastic Gradient Decent', 
+              'Decision Tree'],
+    'Score': [acc_linear_svc, acc_knn, acc_logreg, 
+              acc_random_forest, acc_gaussian, acc_perceptron, 
+              acc_sgd, acc_decision_tree]})
+result_df = results.sort_values(by='Score', ascending = False)
+result_df = result_df.set_index('Score')
+
+'''
+Score	Model
+92.59	Random Forest
+92.59	Decision Tree
+86.31	KNN
+81.82	Logistic Regression
+81.48	Support Vector Machines
+81.14	Perceptron
+78.23	Naive Bayes
+72.5	Stochastic Gradient Decent
+'''
+
+# K-fold Cross Validation Performance
+from sklearn.model_selection import cross_val_score
+rf = RandomForestClassifier(n_estimators = 100)
+scores = cross_val_score(rf, x_train, y_train, cv=10, scoring = 'accuracy')
+
+print("Scores: ", scores)
+print("Mean: ", scores.mean())
+print("Standard deviation :", scores.std())
 
 
 
