@@ -454,5 +454,20 @@ plt.figure(figsize=(14,7))
 plot_precision_vs_recall(precision, recall)
 plt.show()
 
-    
+# ROC AUC Curve
+from sklearn.metrics import roc_curve
+false_positive_rate, true_positive_rate, threshold = roc_curve(y_train, y_scores)
+
+def plot_roc_curve(false_positive_rate, true_positive_rate, label=None):
+    plt.plot(false_positive_rate, true_positive_rate, linewidth=2, label=label)
+    plt.plot([0, 1], [0, 1], 'r', linewidth=4)
+    plt.axis([0, 1, 0, 1])
+    plt.xlabel('False Positive Rate (FPR)', fontsize=16)
+    plt.ylabel('True Positive Rate (TPR)', fontsize=16)
+
+plt.figure(figsize=(14, 7))
+plot_roc_curve(false_positive_rate, true_positive_rate)
+plt.show()
+
+
 
