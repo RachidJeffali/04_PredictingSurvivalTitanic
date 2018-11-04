@@ -469,5 +469,10 @@ plt.figure(figsize=(14, 7))
 plot_roc_curve(false_positive_rate, true_positive_rate)
 plt.show()
 
+# ROC AUC Score
+from sklearn.metrics import roc_auc_score
+r_a_score = round(roc_auc_score(y_train, y_scores) * 100, 2)
+# => 88,99%
+
 
 
