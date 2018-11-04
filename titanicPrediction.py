@@ -443,5 +443,16 @@ plt.figure(figsize=(14, 7))
 plot_precision_and_recall(precision, recall, threshold)
 plt.show()
 
+# Plot precision and recall against each other
+def plot_precision_vs_recall(precision, recall):
+    plt.plot(recall, precision, "g--", linewidth = 2.5)
+    plt.ylabel("recall", fontsize = 19)
+    plt.xlabel("precision", fontsize = 19)
+    plt.axis([0,1.5,0,1.5])
+    
+plt.figure(figsize=(14,7))
+plot_precision_vs_recall(precision, recall)
+plt.show()
+
     
 
