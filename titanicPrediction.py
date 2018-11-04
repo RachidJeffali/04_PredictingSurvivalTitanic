@@ -391,5 +391,57 @@ Y_prediction = random_forest.predict(x_test)
 acc_random_forest_3 = round(random_forest.score(x_train, y_train) * 100, 2)
 # => acc = 83,5 %
 
+# confusion matrix
+from sklearn.model_selection import cross_val_predict
+from sklearn.metrics import confusion_matrix
 
+predictions = cross_val_predict(random_forest, x_train, y_train, cv=3)
+cm = confusion_matrix(y_train, predictions)
+
+'''
+true negatives : 489
+false positives: 60
+true positives: 93
+false negatives: 249
+'''
+
+# Precision and recall
+from sklearn.metrics import precision_score, recall_score
+print("Precision: ", round(precision_score(y_train, predictions) * 100, 2))
+print("Recall: ", round(recall_score(y_train, predictions)*100,2))
+
+'''
+Precision = 80.58 %
+Recall = 72.81 %
+'''
+
+# F-score
+'''
+The F-score is computed with the harmonic mean of precision and recall. 
+Note that it assigns much more weight to low values. As a result of that, 
+the classifier will only get a high F-score, if both recall and precision are high.
+'''
+from sklearn.metrics import f1_score
+f1_score(y_train, predictions)
+# => F-score = 76.49 %
+
+# plot precision and recall
+from sklearn.metrics import precision_recall_curve
+y_scores = random_forest.predict_proba(x_train)
+y_scores = y_scores[:,1]
+
+precision, recall, threshold = precision_recall_curve(y_train, y_scores)
+
+def plot_precision_and_recall(precision, recall, threshold):
+    plt.plot(threshold, precision[:-1], "r-", label="precision", linewidth=5)
+    plt.plot(threshold, recall[:-1], "b", label="recall", linewidth=5)
+    plt.xlabel("threshold", fontsize=19)
+    plt.legend(loc="upper right", fontsize=19)
+    plt.ylim([0, 1])
+
+plt.figure(figsize=(14, 7))
+plot_precision_and_recall(precision, recall, threshold)
+plt.show()
+
+    
 
