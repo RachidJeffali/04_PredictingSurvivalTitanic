@@ -354,5 +354,42 @@ Y_prediction = random_forest.predict(x_test)
 
 acc_random_forest_2 = round(random_forest.score(x_train, y_train)*100, 2)
 
+# Hyperparameter Tuning
+param_grid = {'criterion' : ['gini', 'entropy'], 'min_samples_leaf':[1,5,10,25,50,70],
+              'min_samples_split' : [2,4,10,12,16,18,25,35], 
+              'n_estimators' : [100,400,700,1000,1500]}
+
+from sklearn.model_selection import GridSearchCV, cross_val_score
+
+rf = RandomForestClassifer(n_estimators = 100, max_features = 'auto', 
+                           oob_score = True, random_state = 1, n_jobs = -1)
+
+clf = GridSearchCV(estimator = rf, param_grid = param_grid, n_jobs = -1)
+clf.fit(x_train, y_train)
+clf.bestparam
+
+'''Bests Param
+
+{'criterion' : 'gini',
+'min_sample_leaf' : 1,
+'min_samples_split' : 10,
+'n_estimators' : 100}
+
+'''
+# Test New parameters
+random_forest = RandomForestClassifier(criterion = 'gini',
+                                       min_samples_leaf = 1,
+                                       min_samples_split = 100,
+                                       n_estimators = 100,
+                                       max_features = 'auto',
+                                       oob_score = True,
+                                       random_state = 1,
+                                       n_jobs = -1)
+
+random_forest.fit(x_train, y_train)
+Y_prediction = random_forest.predict(x_test)
+acc_random_forest_3 = round(random_forest.score(x_train, y_train) * 100, 2)
+# => acc = 83,5 %
+
 
 
